@@ -6,11 +6,7 @@ module.exports = {
       screens: {
         "sm": "480px"
       }
-    },
-    fontFamily: {
-      Poppins
     }
-  },
+    },
   plugins: [require("daisyui")],
 }
-

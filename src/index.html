@@ -7,20 +7,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap" rel="stylesheet">
-    <link href=".. /dist/output.css" rel="stylesheet">
+    <link href="../dist/output.css" rel="stylesheet">
     <title>Rashaan's Portfolio</title>
 </head>
-<body class="">
+<body class="font-poppins">
 
 <div class="h-1/2 lg:h-screen bg-gradient-to-t from-indigo-200">
 
     <nav class="w-full fixed top-0 bg-white">
-        <div class="container mx-auto py-5 flex justify-between"></div>
+        <div class="container mx-auto py-5 flex items-center justify-between"></div>
         <div class="flex items-center gap-2">
             <img class="w-8" src="./images/logo.png" alt="logo">
             <span class="text-2xl font-bold text-indigo-900">Welcome</span>
         </div>
-        <ul class="hidden md: flex space-x-10">
+        <ul class="hidden md:flex space-x-10 text-gray-600 font-bold text-sm uppercase">
+            <li class="hover:text-grey-500">
+                <a href="#">Home</a>
+            </li>
+            <li class="hover:text-grey-500">
+                <a href="#">About Me</a>
+            </li>
+            <li class="hover:text-grey-500">
+                <a href="#">My Work</a>
+            </li>
+            <li class="hover:text-grey-500">
+                <a href="#">Contact Me</a>
+            </li>
+        </ul>
+        <img src="./images/logos.png" class="hidden md:block w-5 cursor-pointer" alt="">
+        <div id="hamburger" class="space-y-1.5 md:hidden cursor-pointer">
+            <div class="w-6 h-0.5 bg-black"></div>
+            <div class="w-6 h-0.5 bg-black"></div>
+            <div class="w-6 h-0.5 bg-black"></div>
+        </div>
+        <ul id="menu" class="hidden bg-indigo-900 absolute left-0 top-0 w-full p-10 rounded-b-3xl space-x-10 text-white text-center">
             <li>
                 <a href="#">Home</a>
             </li>
@@ -33,16 +53,11 @@
             <li>
                 <a href="#">Contact Me</a>
             </li>
-
         </ul>
-        <span>2</span>
-        <span>3</span>
-        <div></div>
     </nav>
 
     <div></div>
 </div>
-
-
+<script src="app.js"></script>
 </body>
 </html>
