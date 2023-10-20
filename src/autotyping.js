@@ -1,119 +1,108 @@
-var AutoTyping = function (e) {
-    var t = {};
+"use strict";
 
-    function r(n) {
-        if (t[n])
-            return t[n].exports;
-        var i = (t[n] = { i: n, l: !1, exports: {} });
-        return e[n].call(i.exports, i, i.exports, r), (i.l = !0), i.exports;
-    }
-
-    return r.m = e,
-        r.c = t,
-        r.d = function (e, t, n) {
-            r.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: n });
-        },
-        r.r = function (e) {
-            "undefined" != typeof Symbol &&
-            Symbol.toStringTag &&
-            Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
-                Object.defineProperty(e, "__esModule", { value: !0 });
-        },
-        r.t = function (e, t) {
-            if (1 & t && (e = r(e)), 8 & t) return e;
-            if (4 & t && "object" == typeof e && e && e.__esModule) return e;
-            var n = Object.create(null);
-            if (r.r(n), Object.defineProperty(n, "default", { enumerable: !0, value: e }), 2 & t && "string" != typeof e)
-                for (var i in e)
-                    r.d(
-                        n,
-                        i,
-                        function (t) {
-                        return e[t];
-                    }.bind(null, i)
-                    );
-            return n;
-        }),
-        r.n = function (e) {
-            var t =
-                e && e.__esModule
-                    ? function () {
-                return e.default;
-            }
-            : function () {
-                return e;
-            };
-            return r.d(t, "a", t), t;
-        }),
-        (r.o = function (e, t) {
-            return Object.prototype.hasOwnProperty.call(e, t);
-        }),
-        r.p = ""),
-        r((r.s = 0))
-}([
-    function (e, t, r) {
-        "use strict";
-        r.r(t);
-        t.default = class {
-            constructor(e, t, {
-                typeSpeed: r = 150,
-                deleteSpeed: n = 150,
-                waitBeforeDelete: i = 1e3,
-                waitBetweenWords: o = 1e3,
-                writeWhole: l = !1,
-            } = {}) {
-                this.selector = e;
-                this.text = t;
-                this.typeSpeed = r;
-                this.deleteSpeed = n;
-                this.waitBeforeDelete = i;
-                this.waitBetweenWords = o;
-                this.writeWhole = l;
-                this.el = document.querySelector(e);
-            }
-
-            async start() {
-                this.el;
-                for (let e = 0; e < this.text.length; e++) {
-                    const t = this.text[e];
-                    let r = t.split("");
-                    this.writeWhole && (r = [t]);
-                    await this.writeText(r);
-                    e == this.text.length - 1 && (e = -1);
+function AutoTyping(e) {
+    let t, i = 0, l = 0, n = 0, s = !1, o = 1, p = null, r = 0, y = null;
+    null != e.id ? (null != e.typeText && Array.isArray(e.typeText) || (console.log('*AutoTyping* : (option "typeText") Must add Array with string/s!'),
+        e.typeText = ["Welcome to AutoTyping"]),
+    null != e.textColor && "string" == typeof e.textColor || (e.textColor = "#000"),
+    null != e.typeSpeed && "number" == typeof e.typeSpeed || (e.typeSpeed = 100),
+    null != e.typeRandom && 0 != e.typeRandom && "boolean" == typeof e.typeRandom || (e.typeRandom = !1),
+    null != e.typeDelay && "number" == typeof e.typeDelay || (e.typeDelay = 100),
+    null != e.cursor && "string" == typeof e.cursor || (e.cursor = "|"),
+    null != e.cursorColor && "string" == typeof e.cursorColor || (e.cursorColor = "#000"),
+    null != e.cursorSpeed && "number" == typeof e.cursorSpeed || (e.cursorSpeed = 300),
+    null != e.deleteSpeed && "number" == typeof e.deleteSpeed || (e.deleteSpeed = 50),
+    null != e.deleteDelay && "number" == typeof e.deleteDelay || (e.deleteDelay = 2e3),
+        null != e.textDeleteOptions && "object" == typeof
+            e.textDeleteOptions ? s = !0 : null
+        != e.textDeleteOptions && "object" != typeof
+            e.textDeleteOptions ? (console.log('*AutoTyping* : (option "textDeleteOptions") Must be Object!'),
+            e.textDeleteOptions = null) : e.textDeleteOptions = null, null
+    != e.callBack && "object" == typeof
+        e.callBack ? (p = e.callBack.method,
+    null != e.callBack.counter && "number" == typeof e.callBack.counter && (y = e.callBack.counter)) : null
+        != e.callBack && "object" != typeof e.callBack && console.log('*AutoTyping* : (option "callBack") Must be Object!'),
+        null == e.typeInfinity || 1 == e.typeInfinity || "boolean" != typeof e.typeInfinity ? e.typeInfinity = !0 : e.typeInfinity = !1,
+        this.typingElement = document.querySelector("#" + e.id),
+        this.typingArea = this.typingElement.appendChild(document.createElement("span")),
+        this.cursor = this.typingElement.appendChild(document.createElement("span")),
+        this.typeSpeed = e.typeSpeed,
+        this.typeSpeedRandom = e.typeRandom,
+        this.typingArea.style.color = e.textColor,
+        this.cursor.style.color = e.cursorColor,
+        this.cursor.innerHTML = e.cursor,
+        this.cursorSpeed = e.cursorSpeed,
+        this.typeText = e.typeText,
+        this.deleteSpeed = e.deleteSpeed,
+        this.deleteDelay = e.deleteDelay,
+        this.typeDelay = e.typeDelay,
+        this.typeInfinity = e.typeInfinity,
+        this.callBack = p,
+        this.userCounter = y,
+        this.deleteOptions = e.textDeleteOptions,
+        this.helpingElement = this.typingElement.appendChild(document.createElement("span")),
+        this.helpingElement.innerHTML = ".",
+        this.helpingElement.style.visibility = "hidden",
+        this.init = function () {
+        let p = function () {
+            r && this.callBack && (r = 0,
+                this.callBack(this.userCounter),
+            "number" == typeof this.userCounter && (this.userCounter > 0 ? this.userCounter-- : this.userCounter = y));
+            clearInterval(t),
+                this.cursor.style.visibility = "visible";
+            let u = [],
+                h = this.typeText[i].split("");
+            s && (n = this.typeText.indexOf(this.typeText[l]));
+            ++i == this.typeText.length && (i = 0,
+                o = this.typeInfinity ? 1 : 0);
+            let c = function () {
+                let i = h.shift();
+                u.push(i),
+                    this.typingArea.innerHTML += i,
+                    this.typeSpeedRandom ? this.typeSpeed += Math.floor(200 * Math.random()) : this.typeSpeed;
+                let l = setTimeout(c, this.typeSpeed);
+                if (this.typeSpeed = e.typeSpeed, 0 == h.length) {
+                    clearTimeout(l);
+                    let e = 0, i = function () {
+                        0 == e ? (this.cursor.style.visibility = "hidden",
+                            e = 1) : (this.cursor.style.visibility = "visible",
+                            e = 0)
+                    }.bind(this);
+                    t = setInterval(i, this.cursorSpeed),
+                        setTimeout(d, this.deleteDelay)
                 }
-            }
-
-            writeText(e) {
-                let t = this;
-                return new Promise((r) => {
-                    const n = this.el;
-                    let i = !1;
-                    let o = setInterval(() => {
-                        let l = e.shift();
-                        i && (i = !1, l = " " + l);
-                        i = " " == l;
-                        n.innerText += l;
-                        0 == e.length &&
-                        (clearInterval(o),
-                        setTimeout(() => {
-                        let e = setInterval(() => {
-                        const i = n.innerText;
-                        this.writeWhole
-                        ? (n.innerText = "")
-                        : (n.innerText = i.substr(0, i.length - 1)),
-                        0 == n.innerText.length &&
-                        (clearInterval(e),
-                         setTimeout(() => r(), this.waitBetweenWords));
-                         }, this.deleteSpeed);
-                         }, this.waitBeforeDelete));
-                    }, this.typeSpeed);
-                });
-            }
-        };
-    },
-]).default;
-
-
+            }.bind(this);
+            c();
+            let d = function () {
+                clearInterval(t), this.cursor.style.visibility = "visible", u.pop();
+                let e = "";
+                for (let t = 0; t < u.length; t++) e += u[t];
+                if (this.typingArea.innerHTML = e, s && n == l) for (let e in this.deleteOptions) if (e == n && this.deleteOptions[e].deleteToChar == u.length) return h = this.deleteOptions[e].continueThis.split(""), n++,
+                    void setTimeout(c, this.typeSpeedRandom ? this.typeSpeed += Math.floor(200 * Math.random()) : this.typeSpeed);
+                let i = setTimeout(d, this.deleteSpeed);
+                if (0 == u.length) {
+                    clearTimeout(i);
+                    let e = 0, s = function () {
+                        0 == e ? (this.cursor.style.visibility = "hidden",
+                            e = 1) : (this.cursor.style.visibility = "visible",
+                            e = 0)
+                    }.bind(this);
+                    if (t = setInterval(s, this.cursorSpeed),
+                    !this.typeInfinity && !o) return clearInterval(t),
+                        void (this.cursor.style.visibility = "hidden");
+                    this.callBack && r++, n = ++l,
+                    l == this.typeText.length && (l = 0),
+                        setTimeout(p, this.typeDelay)
+                }
+            }.bind(this)
+        }.bind(this);
+        return p(), this
+    }, this.stop = function () {
+        this.typeInfinity = !1
+    }) : this.init = function () {
+        console.log('*AutoTyping* : (option "id") Must add element id!')
+    }
+}
 
 const exampleText = ['Developer', 'Designer', 'Creator'];
 const exampleTyping = new AutoTyping('#text', exampleText, {
