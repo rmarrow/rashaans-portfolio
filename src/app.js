@@ -12,3 +12,10 @@ hLinks.forEach(link=>{
     hamburger.classList.toggle("bg-white")
   })
 })
+
+const myText = new AutoTyping({
+
+  id: 'text',
+  typeText: ['Designer','Creator', 'Programmer', 'Designer']
+
+}).init();
