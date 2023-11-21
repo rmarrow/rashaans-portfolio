@@ -16,7 +16,6 @@ hLinks.forEach(link=>{
 })
 
 const myText = new AutoTyping({
-
   id: 'text',
   typeText: ['Designer','Creator', 'Programmer', 'Designer']
 
